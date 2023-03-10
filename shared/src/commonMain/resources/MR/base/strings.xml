@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="login_button_text">Login</string>
+    <string name="register_user_button_text">Register New User</string>
+
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="first_name_label">First Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="phone_number_label">Phone Number</string>
+
+    <string name="styleguide_button_section_title">Button Styles</string>
+    <string name="styleguide_button_primary_label">Primary Button</string>
+    <string name="styleguide_button_secondary_label">Secondary Button</string>
+    <string name="styleguide_button_tertiary_label">Tertiary Button</string>
+    <string name="styleguide_text_section_title">Text Styles</string>
+    <string name="styleguide_text_headline_text">Headline</string>
+    <string name="styleguide_text_headline_text2">Headline 2</string>
+    <string name="styleguide_text_plain">This is a plain text example.</string>
+
+    <string name="version_name_format">Version %1$s</string>
+    <string name="tap_to_count">Tap to count</string>
+    <string name="view_list">View List</string>
+    <string name="view_selector">View Selector</string>
+    <string name="view_style_guide">View Styles</string>
+    <string name="tap_count_message_format">Tap Count: %1$d</string>
+
+    <string name="qr_screen_title">QR Scan Results</string>
+    <string name="qr_show_scanner">Scan QR Code</string>
+
+    <string name="image_analysis_title">Image analysis</string>
+    <string name="image_analysis_content_description">Just a simple image</string>
+    <string name="image_analysis_button_analyze_image">Analyze Image</string>
+    <string name="image_analysis_button_pick_from_gallery">Pick from Gallery</string>
+    <string name="image_analysis_button_take_photo">Take a Photo</string>
+    <string name="image_analysis_error_desc">Something went wrong: %s</string>
+    <string name="image_analysis_error">Error!</string>
+
+    <string name="bluetooth_show_screen_button_title">Bluetooth</string>
+
+</resources>

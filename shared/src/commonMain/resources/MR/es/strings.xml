@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="version_name_format">Versión %1$s</string>
+    <string name="tap_to_count">Toca para contar</string>
+    <string name="view_list">Ver Lista</string>
+    <string name="view_selector">Ver selector</string>
+    <string name="view_style_guide">Ver guía de estilo</string>
+    <string name="tap_count_message_format">Cuenta de toques: %1$d</string>
+    <string name="qr_screen_title">Resultados de escaneo QR</string>
+</resources>

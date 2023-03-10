@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- format: #RRGGBB[AA] or 0xRRGGBB[AA] or RRGGBB[AA] where [AA] - optional -->
+
+    <!-- default theme -->
+    <color name="buttonPrimaryTextColor">
+        <light>FFFFFFFF</light>
+        <dark>FFFFFFFF</dark>
+    </color>
+    <color name="buttonSecondaryTextColor">
+        <light>4D004DFF</light>
+        <dark>7D4B7EFF</dark>
+    </color>
+    <color name="primaryColor">
+        <light>4D004DFF</light>
+        <dark>7D4B7EFF</dark>
+    </color>
+    <color name="secondaryColor">
+        <light>FFFFFFFF</light>
+        <dark>FFFFFFFF</dark>
+    </color>
+
+    <!-- theme2 -->
+    <color name="theme2buttonPrimaryTextColor">
+        <light>FFFFFFFF</light>
+        <dark>18031EFF</dark>
+    </color>
+    <color name="theme2buttonSecondaryTextColor">
+        <light>B81D28FF</light>
+        <dark>7D4B7EFF</dark>
+    </color>
+    <color name="theme2primaryColor">
+        <light>B81D28FF</light>
+        <dark>7D4B7EFF</dark>
+    </color>
+    <color name="theme2secondaryColor">
+        <light>1289B2FF</light>
+        <dark>1289B2FF</dark>
+    </color>
+
+    <!-- legacy colors -->
+    <color name="loginButtonColor">
+        <light>360568FF</light>
+        <dark>5B2A86FF</dark>
+    </color>
+    <color name="loginButtonTextColor">
+        <light>FFFFFFFF</light>
+        <dark>000000FF</dark>
+    </color>
+</resources>

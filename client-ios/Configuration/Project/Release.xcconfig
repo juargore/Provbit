@@ -1,0 +1,32 @@
+//
+//  Release.xcconfig
+//
+//  Created by Kyle LeNeau on 9/9/2020.
+//  Copyright (c) 2020 Bright.ai, Inc. All rights reserved.
+//
+
+#include "../Shared/Base/Configurations/Release.xcconfig"
+
+// Default Swift Version
+SWIFT_VERSION = 5.5
+
+// Name to show for the App Launcher
+BUNDLE_DISPLAY_NAME = Provbit
+
+// Base of the bundle ID
+BUNDLE_ID_ROOT = ai.bright.provbit
+
+// Suffix to build Bundle ID (none for Store builds)
+BUNDLE_ID_SUFFIX =
+
+// Additional PreProcessor macros
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) NS_BLOCK_ASSERTIONS=1
+
+// Entitlement User Defined Settings
+APS_ENVIRONMENT = production
+APP_GROUP = group.ai.bright.provbit.extensions
+KEYCHAIN_ACCESS_GROUP = $(AppIdentifierPrefix)ai.bright.provbit
+
+// Code Signing Identity
+CODE_SIGN_IDENTITY = iPhone Distribution
+CODE_SIGN_STYLE = Manual

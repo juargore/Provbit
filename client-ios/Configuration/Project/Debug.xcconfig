@@ -1,0 +1,38 @@
+//
+//  Debug.xcconfig
+//
+//  Created by Kyle LeNeau on 9/9/2020.
+//  Copyright (c) 2020 Bright.ai, Inc. All rights reserved.
+//
+
+#include "../Shared/Base/Configurations/Debug.xcconfig"
+
+// Default Swift Version
+SWIFT_VERSION = 5.5
+
+// Name to show for the App Launcher
+BUNDLE_DISPLAY_NAME = Provbit
+
+// Base of the bundle ID
+BUNDLE_ID_ROOT = ai.bright.provbit
+
+// Suffix to build Bundle ID (none for Store builds)
+BUNDLE_ID_SUFFIX =
+
+// Disable module debugging for the app itself. LLDB is unable to capture many variables
+// that should be in scope without disabling this setting.
+// See also https://forums.developer.apple.com/thread/20889
+CLANG_ENABLE_MODULE_DEBUGGING = NO
+
+// Additional PreProcessor macros
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) INTERNAL=1 DEBUG=1
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = INTERNAL DEBUG
+
+// Entitlement User Defined Settings
+APS_ENVIRONMENT = development
+APP_GROUP = group.ai.bright.provbit${BUNDLE_ID_SUFFIX}.extensions
+KEYCHAIN_ACCESS_GROUP = $(AppIdentifierPrefix)ai.bright.provbit${BUNDLE_ID_SUFFIX}
+
+// Code Signing
+CODE_SIGN_STYLE = Automatic
+PROVISIONING_PROFILE_SPECIFIER = // Xcode Managed Profile

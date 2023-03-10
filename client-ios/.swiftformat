@@ -1,0 +1,6 @@
+--exclude Provbit/Application/ProvbitKeys.swift, ./vendor/*
+--disable wrapMultilineStatementBraces
+--importgrouping testable-bottom
+--maxwidth 120
+--wraparguments before-first
+--wrapcollections before-first

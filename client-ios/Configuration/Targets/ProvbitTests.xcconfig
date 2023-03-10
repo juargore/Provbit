@@ -1,0 +1,27 @@
+//
+//  ProvbitTests.xcconfig
+//
+//  Created by Kyle LeNeau on 9/9/2020.
+//  Copyright (c) 2020 Bright.ai, Inc. All rights reserved.
+//
+
+#include "../Shared/iOS/iOS-Application.xcconfig"
+
+// Setting transitively used by Xcode for the Bundle ID
+PRODUCT_BUNDLE_IDENTIFIER = ai.bright.provbittests${BUNDLE_ID_SUFFIX}
+
+// Product name
+PRODUCT_NAME = $(TARGET_NAME)
+
+// Other Linker Flags
+OTHER_LDFLAGS = $(inherited) -framework XCTest
+
+// Info.plist file to pull in
+INFOPLIST_FILE = $(SRCROOT)/Provbit/Application/TestHelpers/Support/Info.plist
+
+// Min iOS Deployment Target & Devices
+IOS_DEPLOYMENT_TARGET = 13.0
+TARGETED_DEVICE_FAMILY = 1,2
+
+// Code Signing Identity (certificate)
+PROVISIONING_PROFILE_SPECIFIER =

@@ -1,0 +1,13 @@
+#include "Provbit.xcconfig"
+
+// API Environment. This is the default API environment for this configuration, builds with a debug
+// view can override this. This value must match an APIEnvironment.swift rawValue.
+API_ENVIRONMENT = Production
+
+// Environment used to configure services other than the API (e.g. analytics, crash reporting) that
+// should always point to a specific environment for this configuration, regardless of the API
+// environment. This value must match an APIEnvironment.swift rawValue.
+SERVICE_ENVIRONMENT = Beta
+
+// Provisioning Profile
+PROVISIONING_PROFILE_SPECIFIER = Provbit

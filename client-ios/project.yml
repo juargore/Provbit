@@ -1,0 +1,116 @@
+name: Provbit
+configs:
+  Debug: debug
+  Release: release
+configFiles:
+  Debug: Configuration/Project/Debug.xcconfig
+  Release: Configuration/Project/Release.xcconfig
+settings:
+  DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+  DEVELOPMENT_TEAM: Q6SZ37AHX7
+  CURRENT_PROJECT_VERSION: 1 # This is required for fastlane. Will be overwritten at deploy-time by CI.
+  MARKETING_VERSION: 1.0.0
+  FRAMEWORK_SEARCH_PATHS: "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)"
+  OTHER_LD_FLAGS:
+    - "$(inherited)"
+    - "-framework"
+    - "shared"
+options:
+  groupSortPosition: top
+  deploymentTarget:
+    iOS: "14.0"
+packages:
+  Auth0:
+    url: https://github.com/auth0/Auth0.swift.git
+    exactVersion: 1.38.1
+  Bugsnag:
+    url: https://github.com/bugsnag/bugsnag-cocoa
+    exactVersion: 6.6.4
+  ClientFoundation:
+    url: https://github.com/BrightDotAi/client-foundation-ios.git
+    exactVersion: 0.0.18
+  CodeScanner:
+    url: https://github.com/twostraws/CodeScanner.git
+    exactVersion: 2.1.1
+  ViewInspector:
+    url: https://github.com/nalexn/ViewInspector
+    exactVersion: 0.9.1
+targets:
+  Provbit:
+    type: application
+    platform: iOS
+    settings:
+      INFOPLIST_FILE: Provbit/Application/Support/Info.plist
+    configFiles:
+      Debug: Configuration/Targets/Provbit-Debug.xcconfig
+      Release: Configuration/Targets/Provbit-Release.xcconfig
+    sources:
+      - path: Provbit
+        excludes:
+          - "**/*Tests.*"
+          - "**/TestHelpers/*"
+      - path: README.md
+        buildPhase: none
+    dependencies:
+      - package: Auth0
+      - package: Bugsnag
+      - package: ClientFoundation
+      - package: CodeScanner
+    scheme:
+      testTargets:
+        - ProvbitTests
+      gatherCoverageData: true
+    preBuildScripts:
+      - script: |
+          cd ..
+          ./gradlew :shared:embedAndSignAppleFrameworkForXcode
+        name: "Gradle build"
+      - script: |
+          ./Scripts/BuildPhasePostCompile.sh
+        name: "Post Gradle Build"
+      - script: |
+          if [ `uname -m` == 'arm64' ] && [ -d /opt/homebrew/bin/ ]; then
+            export PATH=/opt/homebrew/bin:$PATH
+          fi
+
+          mint run chimney generate -o "Provbit/Application/Support/ProvbitKeys.swift"
+
+        name: "Chimney generate"
+    postCompileScripts:
+      - script: |
+          if [ $ENABLE_PREVIEWS == "NO" ]
+          then
+            export PATH="/opt/homebrew/bin:$PATH"
+            # `xcrun` needed here see: https://github.com/yonaskolb/Mint/issues/179#issuecomment-732682750
+            xcrun --sdk macosx mint run swiftlint --fix && xcrun --sdk macosx mint run swiftlint
+          else
+            echo "Skipping the script because of preview mode"
+          fi
+        name: Swiftlint
+      - script: |
+          if [ $ENABLE_PREVIEWS == "NO" ]
+          then
+            export PATH="/opt/homebrew/bin:$PATH"
+            # `xcrun` needed here see: https://github.com/yonaskolb/Mint/issues/179#issuecomment-732682750
+            xcrun --sdk macosx mint run swiftformat "$SRCROOT"
+          else
+            echo "Skipping the script because of preview mode"
+          fi
+        name: SwiftFormat
+    postBuildScripts:
+      - script: Scripts/update_settings_version_number.sh
+        name: "Settings.bundle: Update Version Number"
+  ProvbitTests:
+    type: bundle.unit-test
+    platform: iOS
+    configFiles:
+      Debug: Configuration/Targets/ProvbitTests.xcconfig
+      Release: Configuration/Targets/ProvbitTests.xcconfig
+    sources:
+      - path: Provbit
+        includes:
+          - "**/*Tests.*"
+          - "**/TestHelpers/*"
+    dependencies:
+      - target: Provbit
+      - package: ViewInspector

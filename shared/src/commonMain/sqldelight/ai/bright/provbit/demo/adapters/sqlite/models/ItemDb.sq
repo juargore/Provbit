@@ -1,0 +1,20 @@
+CREATE TABLE ItemDb(
+guid TEXT NOT NULL PRIMARY KEY,
+name TEXT NOT NULL,
+desc TEXT NOT NULL
+);
+
+insertItem:
+INSERT OR REPLACE INTO ItemDb(guid, name, desc)VALUES(?,?,?);
+
+selectAll:
+SELECT * FROM ItemDb;
+
+selectById:
+SELECT * FROM ItemDb WHERE guid = ?;
+
+deleteItem:
+DELETE FROM ItemDb WHERE guid = ?;
+
+updateItem:
+INSERT OR REPLACE INTO ItemDb(guid, name, desc)VALUES(?,?,?);

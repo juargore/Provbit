@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <plural name="tap_count_plural">
+        <item quantity="one" formatted="true">%1$d tap</item>
+        <item quantity="other" formatted="true">%1$d taps</item>
+    </plural>
+</resources>

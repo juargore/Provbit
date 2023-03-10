@@ -1,0 +1,23 @@
+### OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+
+### Gradle
+.gradle
+build/
+
+### IntelliJ
+.idea
+.idea/
+*.iml
+
+### XCode
+xcuserdata/
+*.xcodeproj
+
+### Android
+local.properties
+
+### Secrets file
+buildSrc/src/main/java/Secrets.kt

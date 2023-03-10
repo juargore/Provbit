@@ -1,0 +1,21 @@
+# SwiftFormat
+swift_format_mint_path = `mint which swiftformat`
+swiftformat.binary_path = swift_format_mint_path.strip
+swiftformat.check_format(fail_on_error: true)
+
+# xcpretty-json-formatter must be specified as the formatter when running tests via fastlane.
+xcode_summary.report 'build/reports/errors.json'
+
+slather.configure(
+  'Provbit.xcodeproj',
+  'Provbit',
+  options: {
+    # Ignore Swift Packages
+    ignore_list: ['../**/SourcePackages/*'],
+    workspace: 'Provbit.xcworkspace',
+  },
+)
+
+slather.notify_if_coverage_is_less_than(minimum_coverage: 80, notify_level: :warning)
+slather.notify_if_modified_file_is_less_than(minimum_coverage: 80, notify_level: :warning)
+slather.show_coverage

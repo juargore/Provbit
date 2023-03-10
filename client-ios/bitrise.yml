@@ -1,0 +1,115 @@
+format_version: "8"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: ios
+
+app:
+  envs:
+  - FASTLANE_LANE: ios test
+  - FASTLANE_WORK_DIR: "."
+  - FASTLANE_XCODE_LIST_TIMEOUT: "120"
+  - MINT_PATH: "/usr/local/lib/mint"
+  - MINT_LINK_PATH: "/usr/local/bin"
+
+trigger_map:
+- push_branch: main
+  workflow: deploy
+- push_branch: release*
+  workflow: deploy
+- pull_request_source_branch: '*'
+  workflow: test
+
+workflows:
+  test:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4: {}
+    - certificate-and-profile-installer@1: {}
+    - cache-pull@2: {}
+    - script@1:
+        inputs:
+        - working_dir: "$HOME"
+        - content: |-
+            #!/usr/bin/env bash
+
+            set -eux
+
+            # Install Mint if it isn't already installed.
+            #
+            if ! command -v mint &> /dev/null
+            then
+              git clone --depth 1 --branch 0.14.2 https://github.com/yonaskolb/Mint.git install-mint
+              (cd install-mint && make)
+            fi
+
+            # Keep track of our Ruby Gems so we can cache them.
+            #
+            RBENV_DIR="`cd $(rbenv which ruby)/../..; pwd`"
+            echo "Gem cache directory: $RBENV_DIR"
+            envman add --key GEM_CACHE_PATH --value $RBENV_DIR
+        title: Install Mint and Configure Ruby Gems Cache
+    - script-runner@0:
+        inputs:
+        - file_path: "$BITRISE_SOURCE_DIR/Scripts/bootstrap.sh"
+        title: Bootstrap with Mint and Xcodegen
+    - fastlane@2:
+        inputs:
+        - lane: test
+        - work_dir: .
+    - danger@2:
+        inputs:
+        - github_api_token: "$DANGER_GITHUB_API_TOKEN"
+        is_always_run: true
+    - cache-push@2:
+        inputs:
+        - cache_paths: |-
+            $BITRISE_CACHE_DIR
+            $GEM_CACHE_PATH
+            $MINT_PATH
+            $MINT_LINK_PATH/mint
+        is_always_run: true
+    - deploy-to-bitrise-io@1: {}
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.4.x
+
+  deploy:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4: {}
+    - certificate-and-profile-installer@1: {}
+    - cache-pull@2: {}
+    - script@1:
+        inputs:
+        - working_dir: "$HOME"
+        - content: |-
+            #!/usr/bin/env bash
+
+            set -eux
+
+            # Install Mint if it isn't already installed.
+            #
+            if ! command -v mint &> /dev/null
+            then
+              git clone --depth 1 --branch 0.14.2 https://github.com/yonaskolb/Mint.git install-mint
+              (cd install-mint && make)
+            fi
+
+            # Keep track of our Ruby Gems so we can cache them.
+            #
+            RBENV_DIR="`cd $(rbenv which ruby)/../..; pwd`"
+            echo "Gem cache directory: $RBENV_DIR"
+            envman add --key GEM_CACHE_PATH --value $RBENV_DIR
+        title: Install Mint and Configure Ruby Gems Cache
+    - script-runner@0:
+        inputs:
+        - file_path: "$BITRISE_SOURCE_DIR/Scripts/bootstrap.sh"
+        title: Bootstrap with Mint and Xcodegen
+    - fastlane@2:
+        inputs:
+        - lane: deploy
+    - deploy-to-bitrise-io@1: {}
+    meta:
+      bitrise.io:
+        stack: osx-xcode-12.4.x
